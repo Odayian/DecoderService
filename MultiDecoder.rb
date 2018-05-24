@@ -12,8 +12,7 @@ data = "" # Store packet
 headers = {} # Header storage
 stream_pid = nil #Store PID for stream
 server = TCPServer.new 80  # Socket to listen on port 80
-
-
+puts "Server Started"
 loop do
     session = server.accept
 	request = session.gets
@@ -31,7 +30,7 @@ loop do
 	data = session.read(headers["Content-Length"].to_i)  # Read the POST data as specified in the header
 	xml_doc = Nokogiri::XML(data) # Store XML data into xml_doc. Will be processed by Nokogiri Gem
 
-	
+	puts "Data Received"
 	
 	############# Data Handler
 	puts "Inside Data Handler"
@@ -44,13 +43,10 @@ loop do
 		if (multi_address != current_address) && (multi_port != current_port)
 			File.open("/tmp/stream.sdp","w") do |f2|
 			f2.puts "v=0\n" +
-				"o=MangoDSP 16045569921389047359 16045569921389249223 IN IP4 10.92.172.19\n" +
-				"s=Mango DSP Audio/Video\n" +
 				"m=video #{multi_port} RTP/AVP 96\n" +
 				"a=rtpmap:96 H264/90000\n" +
 				"c=IN IP4 #{multi_address}\n" +
-				"a=fmtp:96 packetization-mode=1;profile-level-id=42001E;sprop-parameter-sets=Z0KAHtoFh8Q=,aM48gA==\n" +
-				"a=control:__StreamID=7653648\n" 
+				"a=fmtp:96 packetization-mode=1;profile-level-id=42001E;sprop-parameter-sets=Z0KAHtoFh8Q=,aM48gA==\n" 
 			end
 			
 			# Set variables to new values	
@@ -62,14 +58,14 @@ loop do
 			f3.puts "TIME: #{Time.now} | Last Request: #{last_request} | Address: #{current_address} | Port: #{current_port}\r\n"
 			end
 			
-			if stream_pid != nil 
-				puts stream_pid
+			if stream_pid == nil 
+				puts "Nil PID"
 			end
-			stream_pid = fork do
-				# Creates decoded stream. Persists even after application crash. -o <output> ; -b : black scren behind video; -s : display stats in console
-				stream_pid = spawn("omxplayer '/tmp/stream.sdp' -o hdmi --live -s --win '0,0,64,48'", :close_others => true) 
-				puts stream_pid
-			end
+			puts "Connecting to #{current_address} on port #{current_port}" 
+			puts "Decoder Service Restarting"
+			exec("ruby decoder_service.rb restart -n")
+			puts "Decoder Service Restarted"
+			
 		end		
 	end
 	
