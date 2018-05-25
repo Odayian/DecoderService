@@ -30,7 +30,7 @@ Scripted w/ Ruby 2.3.0
 ..+ passwd
 
 + Configure your internet connection then perform the following (You can do this with 'sudo ifconfig')
-+ Note- This internet setting is lost upon reset. You can set permanent interface settings in *sudo nano /etc/network/interfaces*
++ **Note** * This internet setting is lost upon reset. You can set permanent interface settings in *sudo nano /etc/network/interfaces*
 ..+ sudo apt-get update
 ..+ *Disable root account*
 ..+ sudo passwd -l root
