@@ -3,7 +3,6 @@
 require 'socket'
 require 'nokogiri'
 require 'io/console'
-require 'daemons'
 
 # Global variables
 current_address = "" # Store currently streaming IP address
@@ -53,21 +52,28 @@ loop do
 			last_request = request
 			current_address = multi_address
 			current_port = multi_port
-			
 			File.open("/tmp/sincereboot.log","a") do |f3|
 			f3.puts "TIME: #{Time.now} | Last Request: #{last_request} | Address: #{current_address} | Port: #{current_port}\r\n"
 			end
+			puts "Stream PID: #{stream_pid}"
 			
-			if stream_pid == nil 
+			if stream_pid != nil 
+				puts "Not Nil Pid"
+				stream_pid = `pidof omxplayer.bin`
+				puts "Killing old stream with pid: #{stream_pid}"
+				Process.kill('INT', stream_pid.to_i)
+			elsif stream_pid == nil
 				puts "Nil PID"
 			end
+			
 			puts "Connecting to #{current_address} on port #{current_port}" 
 			puts "Decoder Service Restarting"
-			exec("ruby decoder_service.rb restart -n")
+			Process.fork do
+				# Creates decoded stream. Persists even after application crash. -o <output> ; -b : black screen behind video ; -s : display stats in console
+				Process.exec("omxplayer '/tmp/stream.sdp' -o hdmi --live -s -b")
+			end
+			stream_pid = 9999
 			puts "Decoder Service Restarted"
-			
 		end		
 	end
-	
-	
 end
