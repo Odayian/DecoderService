@@ -67,6 +67,8 @@
 
 
 ## Todo 
++ Configure Static IP
++ Configure Hostname other than default 'RaspberryPi'
 + Persistent blank screen between video transitions
 + Have important variables stored in files that can be changed via SSH instead of having to change the master script
 	+  Log locations
