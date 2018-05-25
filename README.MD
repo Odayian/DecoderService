@@ -5,7 +5,7 @@
 Scripted w/ Ruby 2.3.0
 #### Designed for Raspberry Pi 3 B(+) on [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/)
 
-+ Gems required: 
++ Gems required 
 ..+ Nokogiri
 
 ### Setup ###
