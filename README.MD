@@ -19,34 +19,35 @@ Scripted w/ Ruby 2.3.0
 + Burn image to microSD card using [Etcher](https://etcher.io)
 + Log in with default credentials Username: Pi Password: Raspberry
 + Enter the following
-..+ sudo passwd root
+..+ `sudo passwd root`
 ..+ *Choose a secure password for root*
-..+ logout
+..+ `logout`
 ..+ *Replace 'newname' with a new username
-..+ usermod -l newname pi
-..+ usermod -m -d /home/newname newname
+..+ `usermod -l newname pi`
+..+ `usermod -m -d /home/newname newname`
 ..+ *Logout and log back in as the new username*
 ..+ *Change the password*
-..+ passwd
+..+ `passwd`
 
-+ Configure your internet connection then perform the following (You can do this with 'sudo ifconfig')
-+ **Note** * This internet setting is lost upon reset. You can set permanent interface settings in *sudo nano /etc/network/interfaces*
-..+ sudo apt-get update
++ Configure your internet connection then perform the following (You can do this with `sudo ifconfig`)
++ This internet setting is lost upon reset.
++ You can set permanent interface settings in `sudo nano /etc/network/interfaces`
+..+ `sudo apt-get update`
 ..+ *Disable root account*
-..+ sudo passwd -l root
-..+ sudo visudo
+..+ `sudo passwd -l root`
+..+ `sudo visudo`
 ..+ *under root add the following-* 
-..+ newname ALL=(ALL:ALL) ALL
+..+ `newname ALL=(ALL:ALL) ALL`
 ..+ *logout and login as newname*
 ..+ *Install OMXPlayer*
-..+ sudo apt-get -y install OMXPlayer
-..+ sudo apt-get -y install ruby
-..+ sudo apt-get -y install build-essential patch ruby-dev zlib1g-dev liblzma-dev
-..+ gem install nokogiri 
+..+ `sudo apt-get -y install OMXPlayer`
+..+ `sudo apt-get -y install ruby`
+..+ `sudo apt-get -y install build-essential patch ruby-dev zlib1g-dev liblzma-dev`
+..+ `gem install nokogiri` 
 ..+ *Feel free to install git to pull this repository*
 ..+ Save the script to an accesible location. 
 ..+ *After configuration of the script(if needed) you can run the decoder server with the following command*
-..+ rvmsudo ruby MultiDecoder.rb
+..+ `rvmsudo ruby MultiDecoder.rb`
 
 ### Possible Bugs ###
 
@@ -55,7 +56,7 @@ If you receive an error while trying to install Nokogiri, run:
 + sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
 + gem install nokogiri
 
-###Todo: ###
+### Todo ###
 
 + Persistent blank screen between video transitions
 + Have important variables stored in files that can be changed via SSH instead of having to change the master script
