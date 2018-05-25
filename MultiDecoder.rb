@@ -70,9 +70,9 @@ loop do
 			puts "Decoder Service Restarting"
 			Process.fork do
 				# Creates decoded stream. Persists even after application crash. -o <output> ; -b : black screen behind video ; -s : display stats in console
-				Process.exec("omxplayer '/tmp/stream.sdp' -o hdmi --live -s -b")
+				Process.exec("omxplayer '/tmp/stream.sdp' -o hdmi -s -b")
 			end
-			stream_pid = 9999
+			stream_pid = 9999 # One time use faux-PID
 			puts "Decoder Service Restarted"
 		end		
 	end
