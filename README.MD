@@ -67,6 +67,7 @@
 
 
 ## Todo 
++ Cleanup code and debug info
 + Configure Static IP
 + Configure Hostname other than default 'RaspberryPi'
 + Persistent blank screen between video transitions
